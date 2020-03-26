@@ -71,6 +71,33 @@ const gato = new Mascota(
     El constructor pide nombre, edad,sexo,peso y altura
     Generar el RFC a partir de el nombre, edad y sexo
 */
+
+class Persona {
+  constructor(nombre, edad, sexo, peso, altura) {
+    this.nombre = nombre;
+    this.edad = edad;
+    this.sexo = sexo;
+    this.peso = peso;
+    this.altura = altura;
+    // Así puedo generar el atributo "rfc" sin pedirlo por argumentos del constructor
+    this.rfc = `${nombre[0]}${edad}${sexo}`;
+  }
+
+  // El IMC se calculca dividiendo el peso en kg entre la altura al cuadrado
+  calcularIMC() {
+    return (this.peso / (this.altura*this.altura))
+  }
+
+  esMayorDeEdad() {
+    if (this.edad < 18) return false;
+    return true;
+  }
+}
+
+const persona = new Persona("Maui", 25, "M", 67.50, 1.72);
+console.log(persona.esMayorDeEdad());
+console.log(persona.calcularIMC()); 
+
 /*
   2.- Crear una clase Cuenta que tenga los siguientes atributos y metodos:
     -Titular y cantidad
