@@ -46,8 +46,8 @@ class Pet extends Animal {
 }
 
 const pet_1 = new Pet("Chancla");
-console.log(pet_1.askForFood());
-console.log(pet_1.sleep());
+// console.log(pet_1.askForFood());
+// console.log(pet_1.sleep());
 
 class Dog extends Pet {
   constructor(name, breed) {
@@ -76,10 +76,10 @@ class Cat extends Pet {
 const dog_1 = new Dog("Abogado", "Husky");
 const cat_1 = new Cat("Ingeniero", "Persian");
 
-console.log(dog_1.breed);
-console.log(dog_1.askForFood());
-console.log(cat_1.breed);
-console.log(cat_1.askForFood());
+// console.log(dog_1.breed);
+// console.log(dog_1.askForFood());
+// console.log(cat_1.breed);
+// console.log(cat_1.askForFood());
 
 /*
 Ejericico Cinema
@@ -96,3 +96,41 @@ Ejericico Cinema
   Cine.reproducir(pelicula);
   Cine.reproducir(documental);
 */
+
+class Largometraje {
+  constructor(titulo, duracion) {
+    this.titulo = titulo;
+    this.duracion = duracion;
+  }
+}
+
+class Pelicula extends Largometraje {
+  constructor(titulo, duracion, genero) {
+    super(titulo, duracion);
+    this.genero = genero;
+  }
+}
+
+class Documental extends Largometraje {
+  constructor(titulo, duracion, director) {
+    super(titulo, duracion);
+    this.director = director;
+  }
+}
+
+class Cine {
+  constructor(nombre) {
+    this.nombre = nombre;
+  }
+
+  reproducir(largometraje) {
+    return `${largometraje.titulo} tiene una duración de ${largometraje.duracion} minutos`;
+  }
+}
+
+const pelicula = new Pelicula("Titanic", 161, "James Cameron");
+const documental = new Documental("Salvando el Ajusco", 119, "Diego Aaron");
+const cine = new Cine("Cinemex");
+
+console.log(cine.reproducir(pelicula));
+console.log(cine.reproducir(documental));
