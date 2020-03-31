@@ -16,10 +16,10 @@ function sumarVanilla(a, b) {
 }
 
 // ES6
-const sumar = (a, b) => {
-  console.log("Vamos a sumar dos numeros!");
-  return a+b
-};
+// const sumar = (a, b) => {
+//   console.log("Vamos a sumar dos numeros!");
+//   return a+b
+// };
 
 const esPar = (numero) => {
   if (numero%2 === 0) return true
@@ -67,7 +67,7 @@ const callbackContenido = (variable) => {
 }
 
 const miVariable = { nombre: "Maui" };
-higherOrder(miVariable, callbackContenido);
+// higherOrder(miVariable, callbackContenido);
 
 /*
 3.- Crear una función de orden superior que reciba como 
@@ -75,7 +75,22 @@ higherOrder(miVariable, callbackContenido);
     que se pase a la función, se devuelve la suma de los
     dos números, la resta de los dos números o la
     multiplicación de los dos números.
+*/
 
+const efectuarOperacion = (num1, num2, operacion) => {
+  console.log(`Efectuando operacion para ${num1} y ${num2}`);
+  if (typeof operacion !== 'function') throw new Error("Debes ingresar funcion como argumento");
+  return operacion(num1, num2);
+}
+
+const sumar = (num1, num2) => num1 + num2;
+const restar = (num1, num2) => num1 - num2;
+
+// const resultado = efectuarOperacion(3, 4, sumar);
+
+// console.log(resultado);
+
+/*
 4.- Escribe una función de orden superior que reciba una cadena de
     caracteres y debe devolver, mediante un callback, la
     cadena de caracteres en mayúsculas o en minúsculas.
@@ -83,9 +98,51 @@ higherOrder(miVariable, callbackContenido);
             -> pejelagarto
             ordenSuperior("PejeLagarto", mayus);
             -> PEJELARTO
+*/
+// const cadena = "Hola a todos!";
+// const arreglo = [];
 
+const tranformString = (string, callback) => {
+  return callback(string);
+};
+
+const minus = (string) => string.toLowerCase();
+const mayus = (string) => string.toUpperCase();
+
+const transform = tranformString("PejeLagarto", mayus);
+console.log(transform);
+
+/*
 5.- Hacer un arreglo de 4 cantidades de tiempo (en minutos)
     EJEMPLO [120, 80, 200, 100] y tomar solo las cantidades
     mayores a dos horas (hacer la comparación en horas) 
     mediante un callback.
 */
+
+const timesInMinutes = [120, 80, 200, 100];
+
+// const greaterThanTwoHours = (arrayOfTimes, callback) => {
+  // const timesInHours = [];
+
+  // Llenamos el arreglo transformando a horas
+  // for (let i=0; i<arrayOfTimes.length; i++) {
+  //   timesInHours.push( arrayOfTimes[i]/60 );
+  // } 
+//   // Mostramos los valores mayores a dos horas
+//   for (let i=0; i<timesInHours.length; i++) {
+//     if (timesInHours[i] > 2) console.log(timesInHours[i], "es mayor a dos horas!");
+//   }
+// }
+
+const greaterThanTwoHours = (arrayOfTimes, callback) => {
+  const timesInHours = arrayOfTimes.map(time => time/60);
+  return callback(timesInHours);
+}
+
+const callback = (arrayTimesInHours) => {
+    arrayTimesInHours.map(time => {
+      if (time > 2) console.log(time);
+    });
+}
+
+greaterThanTwoHours(timesInMinutes, callback);
