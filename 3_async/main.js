@@ -110,7 +110,7 @@ const minus = (string) => string.toLowerCase();
 const mayus = (string) => string.toUpperCase();
 
 const transform = tranformString("PejeLagarto", mayus);
-console.log(transform);
+// console.log(transform);
 
 /*
 5.- Hacer un arreglo de 4 cantidades de tiempo (en minutos)
@@ -149,4 +149,17 @@ const callback = (arrayTimesInHours) => {
 
 // callback(timesInMinutes);
 
-greaterThanTwoHours(timesInMinutes, callback);
+// greaterThanTwoHours(timesInMinutes, callback);
+
+const arreglo = ["Maria", "José", "Juan"];
+
+// arreglo.map((elemento, i) => console.log(elemento, i));
+
+if (condition) {
+  console.log(object);
+  console.log(object);
+} else console.log(object);
+
+return condition 
+  ? console.log("verdadero!")
+  : console.log("falso...");
