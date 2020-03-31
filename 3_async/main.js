@@ -140,9 +140,13 @@ const greaterThanTwoHours = (arrayOfTimes, callback) => {
 }
 
 const callback = (arrayTimesInHours) => {
-    arrayTimesInHours.map(time => {
-      if (time > 2) console.log(time);
-    });
+    // "a" representa cada elemento del arreglo al ser iterado
+    // arrayTimesInHours.forEach( (a) => {console.log(a)} )
+    arrayTimesInHours.forEach(time => time > 2
+      ? console.log('tiempo: ', time)
+      : undefined);
 }
+
+// callback(timesInMinutes);
 
 greaterThanTwoHours(timesInMinutes, callback);
