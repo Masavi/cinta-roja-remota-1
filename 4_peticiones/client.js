@@ -63,16 +63,34 @@ const POKEAPI_URL = 'https://pokeapi.co/api/v2/pokemon/3/';
   y obtener sus películas.
                     https://swapi.co/
 */
-const SWAPI_URL = 'https://swapi.co/api/people/13/'
-request.get(SWAPI_URL, (err, res, body) => {
-  const json = JSON.parse(body);
-  console.log(`${json.name} aparece en:`);
-  // console.log(json.films[0]);
-  // const urlFilm = json.films[0];
-  json.films.forEach((urlFilm) => {
-    request.get(urlFilm, (err, res, body) => {
-      const jsonFilm = JSON.parse(body);
-      console.log(jsonFilm.title);
-    });
-  });
+// const SWAPI_URL = 'https://swapi.co/api/people/13/'
+// request.get(SWAPI_URL, (err, res, body) => {
+//   const json = JSON.parse(body);
+//   console.log(`${json.name} aparece en:`);
+//   // console.log(json.films[0]);
+//   // const urlFilm = json.films[0];
+//   json.films.forEach((urlFilm) => {
+//     request.get(urlFilm, (err, res, body) => {
+//       const jsonFilm = JSON.parse(body);
+//       console.log(jsonFilm.title);
+//     });
+//   });
+// });
+
+/*
+  6.- Devolver los asteroides que sean potencialmente peligrosos
+    para la tierra de la semana pasada hasta el día de ayer.
+                    https://api.nasa.gov/
+*/
+const START_DATE = "2020-03-01";
+const END_DATE = "2020-03-08";
+const API_KEY = "tyStyrJUPGtyGmwDHAUV0j96zoK6DYFpIqyWBdKY";
+const URL = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${START_DATE}&end_date=${END_DATE}&api_key=${API_KEY}`;
+
+request.get(URL, (err, res, body) => {
+  if (res.statusCode === 200) {
+    const json = JSON.parse(body);
+    // console.log(json.near_earth_objects.2020-03-02);
+    console.log(json.near_earth_objects['2020-03-02']);
+  }
 });
