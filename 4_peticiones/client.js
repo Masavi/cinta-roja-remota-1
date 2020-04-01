@@ -10,7 +10,7 @@ const request = require('request');
 // });
 // console.log("Ha terminado la peticion...");
 
-const SWAPI_URL = 'https://swapi.co/api/people/7/';
+// const SWAPI_URL = 'https://swapi.co/api/people/7/';
 
 // request.get(SWAPI_URL, (err, res, body) => {
 //   console.log(res.statusCode);
@@ -20,15 +20,59 @@ const SWAPI_URL = 'https://swapi.co/api/people/7/';
 // });
 
 const POKEAPI_URL = 'https://pokeapi.co/api/v2/pokemon/3/';
+// ENDPOINTS
 
-request.get(POKEAPI_URL, (err, res, body) => {
-  if (res.statusCode === 200) {
-    const json = JSON.parse(body);
-    console.log(`${json.name} has the next abilities:`);
-    json.abilities.forEach(ability => {
-      console.log(ability.ability.name);
-    })
-  } else {
-    console.log(res.statusCode);
-  }
+// request.get(POKEAPI_URL, (err, res, body) => {
+//   if (res.statusCode === 200) {
+//     const json = JSON.parse(body);
+//     console.log(`${json.name} has the next abilities:`);
+//     json.abilities.forEach(elemento => {
+//       console.log(elemento.ability.name);
+//     })
+//   } else {
+//     console.log(res.statusCode);
+//   }
+// });
+
+/*
+  2.- Hacer una funcion que haga una petición 
+      (Ejemplo: peticionLibro(“i robot”);
+      Buscar un libro y traer el o los autores del primer libro
+      http://openlibrary.org/search.json?q=i+robot) 
+*/
+
+// const OPEN_LIBRARY_URL = 'http://openlibrary.org/search.json?q=i+robot';
+
+// const peticionLibro = () => {
+
+//   request.get(OPEN_LIBRARY_URL, (err, res, body) => {
+//     if (res.statusCode === 200) {
+//       const json = JSON.parse(body);
+//       console.log(json.docs[0]);
+//     } else {
+//       console.log(res.statusCode);
+//     }
+//   });
+// }
+
+// peticionLibro();
+
+
+/*
+  5.- Hacer una petición a la swapi a un personaje 
+  y obtener sus películas.
+                    https://swapi.co/
+*/
+const SWAPI_URL = 'https://swapi.co/api/people/13/'
+request.get(SWAPI_URL, (err, res, body) => {
+  const json = JSON.parse(body);
+  console.log(`${json.name} aparece en:`);
+  // console.log(json.films[0]);
+  // const urlFilm = json.films[0];
+  json.films.forEach((urlFilm) => {
+    request.get(urlFilm, (err, res, body) => {
+      const jsonFilm = JSON.parse(body);
+      console.log(jsonFilm.title);
+    });
+  });
 });
