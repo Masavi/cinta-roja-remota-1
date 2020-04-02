@@ -6,7 +6,7 @@ const request = require('request');
 const URL_BASE = 'https://goodreads-devf-aaron.herokuapp.com';
 
 //  Create - POST
-const createAuthor = (name, last_name, nacionalidad, biography, gender, age) => {
+const create = (name, last_name, nacionalidad, biography, gender, age) => {
   const URL = `${URL_BASE}/api/v1/authors/`
   const jsonSend = {
     "name": name,
@@ -75,4 +75,75 @@ const deleteAuthor = (id) => {
   });
 }
 
-// deleteAuthor(4000);
+/*
+  Al final del ejercicio, debes ejecutar las siguientes 
+  funciones para probar que todo esta implementado correctamente:
+
+  1 Crear un usuario
+  2 Modificar ese usuario
+  3 Obtener usuario
+  4 Borrar.
+*/
+
+const delAuthor = (id) => {
+  const URL = `${URL_BASE}/api/v1/authors/${id}/`;
+  request.delete(URL, (err, res, body) => {
+    console.log(res.statusCode);
+    // console.log(JSON.parse(body)); No tiene sentido parsear una respuesta vacía...
+    if (res.statusCode === 204) console.log('Eliminado correctamente!');
+  });
+}
+
+const readAuthor = (id) => {
+  const URL = `${URL_BASE}/api/v1/authors/${id}/`;
+  request.get(URL, (err, res, body) => {
+    console.log(res.statusCode);
+    const response = JSON.parse(body);
+    console.log(JSON.parse(body));
+    if (res.statusCode === 200) {
+      delAuthor(response.id);
+    }
+  });
+}
+
+const modifyAuthor = (id, name, last_name, nacionalidad, biography, gender, age) => {
+  const URL = `${URL_BASE}/api/v1/authors/${id}/`
+  const jsonSend = {
+    "name": name,
+    "last_name": last_name,
+    "nacionalidad": nacionalidad,
+    "biography": biography,
+    "gender": gender,
+    "age": age
+  };
+  request.put(URL, { form: jsonSend }, (err, res, body) => {
+    console.log(res.statusCode);
+    const response = JSON.parse(body);
+    console.log(JSON.parse(body));
+    if (res.statusCode === 200) {
+      readAuthor(response.id);
+    }
+  });
+}
+
+const crearAuthor = (name, last_name, nacionalidad, biography, gender, age) => {
+  const URL = `${URL_BASE}/api/v1/authors/`
+  const jsonSend = {
+    "name": name,
+    "last_name": last_name,
+    "nacionalidad": nacionalidad,
+    "biography": biography,
+    "gender": gender,
+    "age": age
+  };
+  request.post(URL, { form: jsonSend }, (err, res, body) => {
+    console.log(res.statusCode);
+    console.log(JSON.parse(body));
+    const response = JSON.parse(body);
+    if (res.statusCode === 201) {
+      modifyAuthor(response.id, "Mau", "Villarreal", "MX", "Jojojo", "M", 25);
+    }
+  });
+}
+
+// crearAuthor("Fulanito", "Perez", "USA", "Este compa es muy feliz", "M", 61);
