@@ -19,7 +19,7 @@ const request = require('request');
 //   console.log(`Mi nombre es ${json.name} y nací en el ${json.birth_year}`);[]
 // });
 
-const POKEAPI_URL = 'https://pokeapi.co/api/v2/pokemon/3/';
+// const POKEAPI_URL = 'https://pokeapi.co/api/v2/pokemon/3/';
 // ENDPOINTS
 
 // request.get(POKEAPI_URL, (err, res, body) => {
@@ -82,15 +82,37 @@ const POKEAPI_URL = 'https://pokeapi.co/api/v2/pokemon/3/';
     para la tierra de la semana pasada hasta el día de ayer.
                     https://api.nasa.gov/
 */
-const START_DATE = "2020-03-01";
-const END_DATE = "2020-03-08";
-const API_KEY = "tyStyrJUPGtyGmwDHAUV0j96zoK6DYFpIqyWBdKY";
-const URL = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${START_DATE}&end_date=${END_DATE}&api_key=${API_KEY}`;
+// const START_DATE = "2020-03-01";
+// const END_DATE = "2020-03-08";
+// const API_KEY = "tyStyrJUPGtyGmwDHAUV0j96zoK6DYFpIqyWBdKY";
+// const URL = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${START_DATE}&end_date=${END_DATE}&api_key=${API_KEY}`;
 
-request.get(URL, (err, res, body) => {
-  if (res.statusCode === 200) {
-    const json = JSON.parse(body);
-    // console.log(json.near_earth_objects.2020-03-02);
-    console.log(json.near_earth_objects['2020-03-02']);
-  }
+// request.get(URL, (err, res, body) => {
+//   if (res.statusCode === 200) {
+//     const json = JSON.parse(body);
+//     // console.log(json.near_earth_objects.2020-03-02);
+//     console.log(json.near_earth_objects['2020-03-02']);
+//   }
+// });
+
+const POKEAPI_URL = 'https://pokeapi.co/api/v2/pokemon?limit=151';
+
+request.get(POKEAPI_URL, (err, res, body) => {
+    const respuesta = JSON.parse(body).results;
+    // Prueba el código con i<=2 
+    for(let i=0; i<=30; i++){
+        request.get(respuesta[i].url, (err, res, body) => {
+            
+            const respuesta = JSON.parse(body);
+            
+            let pokemon = {
+                nombre: respuesta.name,
+                movimientos: respuesta.moves,
+                tipos: respuesta.types,
+                altura: respuesta.height,
+                peso: respuesta.weight
+            }
+            console.log(pokemon);
+        });
+    }
 });
