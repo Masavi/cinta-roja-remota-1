@@ -1,0 +1,14 @@
+{
+  "name": "5_crud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Maui Saavedra",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}
