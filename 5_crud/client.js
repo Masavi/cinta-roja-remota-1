@@ -6,15 +6,15 @@ const request = require('request');
 const URL_BASE = 'https://goodreads-devf-aaron.herokuapp.com';
 
 //  Create - POST
-const createAuthor = () => {
+const createAuthor = (name, last_name, nacionalidad, biography, gender, age) => {
   const URL = `${URL_BASE}/api/v1/authors/`
   const jsonSend = {
-    "name": "Maui",
-    "last_name": "Saavedra",
-    "nacionalidad": "MX",
-    "biography": "Me gusta comer tacos",
-    "gender": "M",
-    "age": 25
+    "name": name,
+    "last_name": last_name,
+    "nacionalidad": nacionalidad,
+    "biography": biography,
+    "gender": gender,
+    "age": age
   };
   request.post(URL, { form: jsonSend }, (err, res, body) => {
     console.log(res.statusCode);
@@ -22,7 +22,7 @@ const createAuthor = () => {
   });
 }
 
-createAuthor();
+createAuthor("Gabriel", "Garcia", "MX", "Escritor de realismo mágico", "M", 90);
 
 //  Read   - GET
 //  Update - PUT/PATCH
