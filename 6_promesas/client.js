@@ -74,7 +74,110 @@ const createPromise = (name, last_name, nacionalidad, biography, gender, age) =>
   })
 }
 
-createPromise("Pedro", "Páramo", "ABC", "Anda buscando a su papá en Comala", "M", 34)
-  .then(res => console.log(res))
+// createPromise("Pedro", "Páramo", "ABC", "Anda buscando a su papá en Comala", "M", 34)
+//   .then(res => console.log(res))
+//   .catch(err => console.log(err));
+
+//  Read ALL   - GET
+const readAuthorsPromise = () => {
+  const URL = `${URL_BASE}/api/v1/authors/`
+  return new Promise((resolve, reject) => {
+    request.get(URL, (err, res, body) => {
+      res.statusCode === 200
+        ? resolve(JSON.parse(body))
+        : reject({ message: 'Error reading authors', body })
+    });
+  })
+}
+
+// readAuthors().then().catch()
+
+//  Read ONE   - GET
+const readOneAuthorPromise = (id) => {
+  const URL = `${URL_BASE}/api/v1/authors/${id}/`;
+  return new Promise((resolve, reject) => {
+    request.get(URL, (err, res, body) => {
+      res.statusCode === 200
+        ? resolve(JSON.parse(body))
+        : reject({ message: 'Error reading author', body })
+    });
+  })
+}
+
+//  Update     - PUT/PATCH
+const updateAuthorPromise = (id, name, last_name, nacionalidad, biography, gender, age) => {
+  const URL = `${URL_BASE}/api/v1/authors/${id}/`;
+  const jsonSend = {
+    "name": name,
+    "last_name": last_name,
+    "nacionalidad": nacionalidad,
+    "biography": biography,
+    "gender": gender,
+    "age": age
+  };
+
+  return new Promise((resolve, reject) => {
+    request.put(URL, { form: jsonSend }, (err, res, body) => {
+      res.statusCode === 200
+        ? resolve(JSON.parse(body))
+        : reject({ message: 'Error updating author', body })
+    });
+  });
+}
+
+//  Delete     - DELETE
+const deleteAuthorPromise = (id) => {
+  const URL = `${URL_BASE}/api/v1/authors/${id}/`;
+  return new Promise((resolve, reject) => {
+    request.delete(URL, (err, res, body) => {
+      res.statusCode === 204
+        ? resolve({ message: 'Author succesfully deleted!' })
+        : reject({ message: 'Error deleting author' });
+    });
+  });
+}
+
+/**
+ * Finalmente para probar tus nuevas promesas, tienes que hacer los siguientes pasos 
+ * encadenando promesas:
+    1. Crear un autor
+    2. Modificar el autor
+    3. Obtener ese autor
+    4. Eliminar el autor
+ */
+
+ // Primera Forma: Directo pero no lo recomendable...
+// createPromise("Juan", "Rulfo", "MX", "Escritor", "M", 74)
+//   .then(author => {
+//     console.log('Autor creado:', author);
+//     updateAuthorPromise(author.id, "Juanito", "Rulfito", "MX", "Gran Escritor", "M", 77)
+//       .then(modifiedAuthor => {
+//         console.log('Autor modificado:', modifiedAuthor);
+//         readOneAuthorPromise(modifiedAuthor.id)
+//           .then(readAuthor => {
+//             console.log(readAuthor);
+//             deleteAuthorPromise(readAuthor.id)
+//               .then(response => console.log(response));
+//           ;})
+//       })
+//   })
+//   .catch(err => console.log(err));
+
+ // Segunda Forma: Lo recomdable
+ createPromise("Juan", "Rulfo", "MX", "Escritor", "M", 74)
+  .then(author => {
+    console.log('Autor creado:', author);
+    return updateAuthorPromise(author.id, "Juanito", "Rulfito", "MX", "Gran Escritor", "M", 77);
+  })
+  .then(modifiedAuthor => {
+    console.log('Autor modificado:', modifiedAuthor);
+    return readOneAuthorPromise(modifiedAuthor.id);
+  })
+  .then(readAuthor => {
+    console.log('Autor leído:', readAuthor);
+    return deleteAuthorPromise(readAuthor.id);
+  })
+  .then(deleteResponse => console.log(deleteResponse))
   .catch(err => console.log(err));
 
+ // Tercera Forma: ES6
