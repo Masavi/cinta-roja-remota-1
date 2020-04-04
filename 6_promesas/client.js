@@ -164,20 +164,43 @@ const deleteAuthorPromise = (id) => {
 //   .catch(err => console.log(err));
 
  // Segunda Forma: Lo recomdable
- createPromise("Juan", "Rulfo", "MX", "Escritor", "M", 74)
-  .then(author => {
-    console.log('Autor creado:', author);
-    return updateAuthorPromise(author.id, "Juanito", "Rulfito", "MX", "Gran Escritor", "M", 77);
-  })
-  .then(modifiedAuthor => {
-    console.log('Autor modificado:', modifiedAuthor);
-    return readOneAuthorPromise(modifiedAuthor.id);
-  })
-  .then(readAuthor => {
-    console.log('Autor leído:', readAuthor);
-    return deleteAuthorPromise(readAuthor.id);
-  })
-  .then(deleteResponse => console.log(deleteResponse))
-  .catch(err => console.log(err));
+//  createPromise("Juan", "Rulfo", "MX", "Escritor", "M", 74)
+//   .then(author => {
+//     console.log('Autor creado:', author);
+//     return updateAuthorPromise(author.id, "Juanito", "Rulfito", "MX", "Gran Escritor", "M", 77);
+//   })
+//   .then(modifiedAuthor => {
+//     console.log('Autor modificado:', modifiedAuthor);
+//     return readOneAuthorPromise(modifiedAuthor.id);
+//   })
+//   .then(readAuthor => {
+//     console.log('Autor leído:', readAuthor);
+//     return deleteAuthorPromise(readAuthor.id);
+//   })
+//   .then(deleteResponse => console.log(deleteResponse))
+//   .catch(err => console.log(err));
 
- // Tercera Forma: ES6
+ // Tercera Forma: ES6 Async / Await
+const authorLifeCycle = async () => {
+  try {
+    const createdAuthor = await createPromise(
+      "Gordolfo", "Gelatino", "MX", "Le gusta comer mucho", "M", 31
+    );
+    console.log('Autor creado', createdAuthor);
+  
+    const modifiedAuthor = await updateAuthorPromise(
+      createdAuthor.id,"Gordolfinho", "Gelatino", "MX", "Le gusta comer mucho", "M", 31
+    );
+    console.log('Autor modificado', modifiedAuthor);
+  
+    const readAuthor = await readOneAuthorPromise(modifiedAuthor.id);
+    console.log('Autor leído', readAuthor);
+  
+    const deleteResponse = await deleteAuthorPromise(readAuthor.id);
+    console.log(deleteResponse);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+authorLifeCycle();
