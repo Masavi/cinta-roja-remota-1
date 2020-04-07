@@ -2,7 +2,11 @@ const express = require('express');
 const app = express();
 const port = 4200;
 
-// Endpoint a raíz
+// Middlewares
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+// Endpoints
 app.get('/', (req, res) => res.status(200).send('¡Bienvendio a mi servidor!'));
 
 app.get('/autor', (req, res) => res.send({ message: 'this is a test' }));
@@ -21,6 +25,13 @@ app.put('/authors/:name/:age', (req, res) => {
 });
 
 // ¿Cómo recibimos un body?
+app.post('/profile', (req, res) => {
+  console.log(req.body);
+  // Aquí iríamos a la base de datos para
+  // intentar crear un elemento con lo que contiene req.body
+  const respuesta = { id: 57, ...req.body };
+  res.status(201).json(respuesta);
+});
 
 app.listen(port, () => console.log(`Servidor escuchando en ${port}`));
 
