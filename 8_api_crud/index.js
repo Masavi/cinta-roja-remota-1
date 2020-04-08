@@ -10,6 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => res.json('¡Bienvenido!'));
 
 // CRUD Peliculas
+
+// CREATE
 app.post('/api/v1/movies', (req, res) => {
   const { body } = req;
   // 1) Crear un registro de "Pelicula" a partir del body
@@ -17,6 +19,39 @@ app.post('/api/v1/movies', (req, res) => {
   // 3) Responder al cliente con la respuesta de la base de datos;
   const newMovie = "";
   res.status(201).json(newMovie);
+});
+
+// READ All
+app.get('/api/v1/movies', (req, res) => {
+  // Obtener peliculas de la base de datos
+  const movies = "";
+  res.status(200).json(movies);
+});
+
+// READ One
+app.get('/api/v1/movies/:id', (req, res) => {
+  // Obtener ID desde params
+  const { id } = req.params;
+  // Obtener pelicula por ID de la base de datos
+  const movie = "";
+  res.status(200).json(movie);
+});
+
+// UPDATE
+app.patch('/api/v1/movies/:id', (req, res) => {
+  // Obtener ID desde params
+  const { id } = req.params;
+  // Encontrar y actualizar pelicula por ID a partir del Body que me manda el cliente
+  const updatedMovie = "";
+  res.status(200).json(updatedMovie);
+});
+
+// DELETE
+app.patch('/api/v1/movies/:id', (req, res) => {
+  // Obtener ID desde params
+  const { id } = req.params;
+  // Encontrar y borrar pelicula por ID
+  res.status(204).json();
 });
 
 
